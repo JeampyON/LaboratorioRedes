@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class MainCliente {
 
-    private static final int PUERTO = 5000;
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -24,8 +22,23 @@ public class MainCliente {
             host = "localhost";
         }
 
+        System.out.println("Seleccione el servicio:");
+        System.out.println("  1 -> Puerto 5000 (procesamiento de texto)");
+        System.out.println("  2 -> Puerto 6000 (responde solo OK)");
+        System.out.print("Opcion: ");
+        String opcion = scanner.nextLine().trim();
+
+        int puerto;
+        if (opcion.equals("2")) {
+            puerto = 6000;
+        } else {
+            puerto = 5000;
+        }
+
+        System.out.println("Conectando a " + host + ":" + puerto + "...");
+
         try {
-            Socket socket = new Socket(host, PUERTO);
+            Socket socket = new Socket(host, puerto);
 
             System.out.println("\n=== CONECTADO AL SERVIDOR ===");
             System.out.println("Puerto local  (cliente)  : " + socket.getLocalPort());
@@ -49,7 +62,7 @@ public class MainCliente {
             System.out.println("Sesion cerrada correctamente.");
 
         } catch (IOException e) {
-            System.out.println("No se pudo conectar al servidor (" + host + ":" + PUERTO + ")");
+            System.out.println("No se pudo conectar al servidor (" + host + ":" + puerto + ")");
             System.out.println("El servidor esta encendido? Error: " + e.getMessage());
         }
     }
